@@ -222,12 +222,12 @@ func TimelineIsStartEndTimeHit(timeLineStartTime string, taskStartTime time.Time
 }
 
 // TimelineRightString 显示右侧信息
-func TimelineRightString(taskIndex int, task *Task, currencyTime time.Time) string {
+func TimelineRightString(taskIndex int, task *Task, curTime time.Time) string {
 	status := "DontNeedDisplay"
 
-	if currencyTime == task.StartTime {
+	if curTime == task.StartTime {
 		status = "开始"
-	} else if currencyTime == task.EndTime {
+	} else if curTime == task.EndTime {
 		status = "结束"
 	}
 
