@@ -1,0 +1,23 @@
+package time_io
+
+import (
+	"log"
+	"os"
+)
+
+// 初始化文件
+func WriteFine(FilePath string, WriteContext []string) {
+	File, err := os.Create(FilePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer File.Close()
+
+	for _, line := range WriteContext {
+		_, err := File.WriteString(line + "\n")
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+}
