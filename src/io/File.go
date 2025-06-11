@@ -1,9 +1,9 @@
 package time_io
 
 import (
-	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 // 初始化文件
@@ -17,11 +17,15 @@ func WriteFile(path string, content []string) {
 
 	defer f.Close()
 
+	sb := strings.Builder{}
+
 	for _, line := range content {
-		fmt.Printf("写入行内容: '%s', 长度: %d\n", line, len(line))
-		_, err := f.WriteString(line)
-		if err != nil {
-			log.Fatal(err)
-		}
+		sb.WriteString(line)
+		sb.WriteString("\n")
+	}
+
+	_, err = f.WriteString(sb.String())
+	if err != nil {
+		log.Fatal(err)
 	}
 }

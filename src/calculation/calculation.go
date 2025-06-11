@@ -114,7 +114,7 @@ func (t *TaskList) TaskTimeLine(timeLineStartTime string, timeInterval int, coun
 	// 计算需要的时间点数量（24小时 = 1440分钟）
 	// 加1是因为我们需要包含起始时间点
 	timePoints := (1440 / timeInterval) + 1
-	tasks := make([]*Task, 0, 10)               // 任务列表，使用容量而不是长度
+	var tasks []*Task                           // 任务列表，使用容量而不是长度
 	infoRightList := make([]string, timePoints) // 右侧信息列表，预分配足够的空间
 	infoLeftList := make([]string, timePoints)  // 左侧信息列表，预分配足够的空间
 
@@ -137,14 +137,14 @@ func (t *TaskList) TaskTimeLine(timeLineStartTime string, timeInterval int, coun
 
 		// 在每一个时间点遍历一次所有任务，将开始/结束时间匹配的任务添加到对应时间点的右侧显示列表中
 		for taskIndex, task := range tasks {
-			if task != nil { // 空值安全检查
-
-				curInfoRight := TimelineRightString(taskIndex, task, curTime)
-				if curInfoRight != "nil" {
-					infoRightList[i] += curInfoRight // 将任务信息加入右侧信息队列
-				}
-			} else {
+			if task == nil {
 				fmt.Println("任务列表中没有任务与时间轴尺度匹配")
+				continue
+			}
+			// 空值安全检查
+			curInfoRight := TimelineRightString(taskIndex, task, curTime)
+			if curInfoRight != "nil" {
+				infoRightList[i] += curInfoRight // 将任务信息加入右侧信息队列
 			}
 		}
 
@@ -164,9 +164,9 @@ func (t *TaskList) TaskTimeLine(timeLineStartTime string, timeInterval int, coun
 		fmt.Println(tasks)
 		fmt.Println(task)
 		fmt.Println("进入循环")
-		Line := task.TimelineTaskInfoString(timeInterval, i, timeFormat)
+		line := task.TimelineTaskInfoString(timeInterval, i, timeFormat)
 		// fmt.Print(Line)
-		strSliceToWrite = append(strSliceToWrite, Line)
+		strSliceToWrite = append(strSliceToWrite, line)
 	}
 
 	return strSliceToWrite
@@ -209,14 +209,16 @@ func TimelineIsStartEndTimeHit(timeLineStartTime string, taskStartTime time.Time
 			isEndHit = true
 		}
 
-		// 检测是否经过一轮（24h）
-		if timeAddSumMinute >= 1440 {
-			if isStartHit && isEndHit {
-				return true
-			}
-			fmt.Println("开始/结束未命中，无法显示")
-			return false
+		if timeAddSumMinute < 1440 {
+			continue
 		}
+
+		// 检测是否经过一轮（24h）
+		if isStartHit && isEndHit {
+			return true
+		}
+		fmt.Println("开始/结束未命中，无法显示")
+		return false
 	}
 
 }
