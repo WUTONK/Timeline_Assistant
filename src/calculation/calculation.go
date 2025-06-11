@@ -245,15 +245,15 @@ func DisplayTaskTimeLine_DisplayTaskInfo(Task *Task, TimeInterval int, TaskIndex
 
 	// 统计任务耗时
 	// 原理：循环增加时间周期，然后将周期加到开始时间，当开始时间等于结束时间，就可以知道经过了多久
-	CurrencyTime := Task.Task_Start_Time
-	for i := 0; ; {
-		// 防止任务开始和结束时间一致，放在前面
-		if CurrencyTime == Task.Task_End_Time {
-			CurrencyTimeFormat := CurrencyTime.Format(TimeFormat)
-			TaskInfo := fmt.Sprintf("任务%s:%v 耗时%s \n", Task.Task_Name, TaskIndex, CurrencyTimeFormat)
-			return TaskInfo
-		}
-		CurrencyTime = CurrencyTime.Add(time.Duration(i*TimeInterval) * time.Minute)
-		i++
-	}
+	TimeConsuming := Task.Task_End_Time.Sub(Task.Task_Start_Time)
+	BaseTime := time.Date(0, 0, 0, 0, 0, 0, 0, time.UTC)
+	TaskInfo := fmt.Sprintf("任务%v:%v 耗时%s\n",
+		TaskIndex,
+		Task.Task_Name,
+		time.Time.Format(
+			(BaseTime.Add(TimeConsuming)),
+			TimeFormat,
+		))
+
+	return TaskInfo
 }
