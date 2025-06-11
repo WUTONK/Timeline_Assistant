@@ -37,11 +37,11 @@ func TimeStandardParser(TimeToParser string) time.Time {
 // 参数 TaskName: 任务名称
 // 参数 TaskStartTime: 任务开始时间（字符串格式 "HH:MM"）
 // 参数 TaskEndTime: 任务结束时间（字符串格式 "HH:MM"）
-func AddTask(t *TaskList, TaskName string, TaskStartTime string, TaskEndTime string) {
-	AfterPeaserTaskStartTime := TimeStandardParser(TaskStartTime)
-	AfterPeaserTaskEndTime := TimeStandardParser(TaskEndTime)
+func (t *TaskList) AddTask(TaskName string, TaskStartTime string, TaskEndTime string) {
+	AfterParserTaskStartTime := TimeStandardParser(TaskStartTime)
+	AfterParserTaskEndTime := TimeStandardParser(TaskEndTime)
 
-	NewTask := &Task{Task_Name: TaskName, Task_Start_Time: AfterPeaserTaskStartTime, Task_End_Time: AfterPeaserTaskEndTime}
+	NewTask := &Task{Task_Name: TaskName, Task_Start_Time: AfterParserTaskStartTime, Task_End_Time: AfterParserTaskEndTime}
 
 	if t.TaskHead == nil {
 		t.TaskHead = NewTask
@@ -56,10 +56,10 @@ func AddTask(t *TaskList, TaskName string, TaskStartTime string, TaskEndTime str
 	CurrencyTask.Next_Task = NewTask
 }
 
-// DeleteLasrTask 删除任务链表中的最后一个任务
+// DeleteLastTask 删除任务链表中的最后一个任务
 // 参数 t: 任务链表
 // 注意：函数名中的 "Lasr" 应该是 "Last" 的拼写错误
-func DeleteLasrTask(t TaskList) {
+func DeleteLastTask(t TaskList) {
 	if t.TaskHead == nil {
 		fmt.Println("队列中没有任务")
 		return
@@ -111,7 +111,7 @@ func PrintTimeList(StartTime string, TimeInterval int, count int, TimeFormat str
 // 参数 TimeInterval: 时间间隔（未使用）
 // 参数 count: 计数（未使用）
 // 参数 TimeFormat: 时间格式
-func DisplayTaskTimeLine(t TaskList, TimeLineStartTime string, TimeInterval int, count int, TimeFormat string) []string {
+func (t *TaskList) DisplayTaskTimeLine(TimeLineStartTime string, TimeInterval int, count int, TimeFormat string) []string {
 	// 计算需要的时间点数量（24小时 = 1440分钟）
 	// 加1是因为我们需要包含起始时间点
 	timePoints := (1440 / TimeInterval) + 1
@@ -251,7 +251,7 @@ func DisplayTaskTimeLine_DisplayTaskInfo(Task *Task, TimeInterval int, TaskIndex
 		TaskIndex,
 		Task.Task_Name,
 		time.Time.Format(
-			(BaseTime.Add(TimeConsuming)),
+			BaseTime.Add(TimeConsuming),
 			TimeFormat,
 		))
 

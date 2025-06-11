@@ -7,7 +7,7 @@ import (
 )
 
 // 初始化文件
-func WriteFine(FilePath string, WriteContext []string) {
+func WriteFile(FilePath string, WriteContext []string) {
 	// fmt.Println("-------------")
 	// fmt.Print(WriteContext)
 	File, err := os.Create(FilePath)

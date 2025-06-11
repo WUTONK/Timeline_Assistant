@@ -11,15 +11,15 @@ import (
 func main() {
 	TaskList := &calculation.TaskList{TaskHead: nil}
 
-	calculation.AddTask(TaskList, "坠机", "00:10", "00:30")
-	calculation.AddTask(TaskList, "MAN", "00:10", "00:40")
-	calculation.AddTask(TaskList, "打德佬", "12:00", "13:50")
-	calculation.AddTask(TaskList, "OFN启动", "12:00", "13:50")
-	calculation.AddTask(TaskList, "黑联启动", "12:00", "13:50")
+	TaskList.AddTask("坠机", "00:10", "00:30")
+	TaskList.AddTask("MAN", "00:10", "00:40")
+	TaskList.AddTask("打德佬", "12:00", "13:50")
+	TaskList.AddTask("OFN启动", "12:00", "13:50")
+	TaskList.AddTask("黑联启动", "12:00", "13:50")
 
-	Context := calculation.DisplayTaskTimeLine(*TaskList, "00:00", 10, 0, "15:04")
+	Context := TaskList.DisplayTaskTimeLine("00:00", 10, 0, "15:04")
 	fmt.Println("--------------------")
-	time_io.WriteFine("./file.txt", Context)
+	time_io.WriteFile("./file.txt", Context)
 
 	// // 打印从00:00开始，每10分钟一个时间点，打印6个时间点
 	// printTimeSequence("00:00", 10, 10)
