@@ -9,7 +9,7 @@ import (
 // main 函数：程序入口
 // 创建任务链表并添加示例任务
 func main() {
-	TaskList := &calculation.TaskList{TaskHead: nil}
+	TaskList := &calculation.TaskList{Head: nil}
 
 	TaskList.AddTask("坠机", "00:10", "00:30")
 	TaskList.AddTask("MAN", "00:10", "00:40")
@@ -17,9 +17,9 @@ func main() {
 	TaskList.AddTask("OFN启动", "12:00", "13:50")
 	TaskList.AddTask("黑联启动", "12:00", "13:50")
 
-	Context := TaskList.DisplayTaskTimeLine("00:00", 10, 0, "15:04")
+	Content := TaskList.TaskTimeLine("00:00", 10, 0, "15:04")
 	fmt.Println("--------------------")
-	time_io.WriteFile("./file.txt", Context)
+	time_io.WriteFile("./file.txt", Content)
 
 	// // 打印从00:00开始，每10分钟一个时间点，打印6个时间点
 	// printTimeSequence("00:00", 10, 10)

@@ -7,19 +7,19 @@ import (
 )
 
 // 初始化文件
-func WriteFile(FilePath string, WriteContext []string) {
+func WriteFile(path string, content []string) {
 	// fmt.Println("-------------")
 	// fmt.Print(WriteContext)
-	File, err := os.Create(FilePath)
+	f, err := os.Create(path)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer File.Close()
+	defer f.Close()
 
-	for _, line := range WriteContext {
+	for _, line := range content {
 		fmt.Printf("写入行内容: '%s', 长度: %d\n", line, len(line))
-		_, err := File.WriteString(line)
+		_, err := f.WriteString(line)
 		if err != nil {
 			log.Fatal(err)
 		}
