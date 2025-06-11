@@ -2,7 +2,7 @@ package main
 
 import (
 	"Timeline_Assistant/src/calculation"
-	time_io "Timeline_Assistant/src/io"
+	timeIO "Timeline_Assistant/src/io"
 	"fmt"
 )
 
@@ -19,7 +19,7 @@ func main() {
 
 	Content := TaskList.TaskTimeLine("00:00", 10, 0, "15:04")
 	fmt.Println("--------------------")
-	time_io.WriteFile("./file.txt", Content)
+	timeIO.WriteFile("./file.txt", Content)
 
 	// // 打印从00:00开始，每10分钟一个时间点，打印6个时间点
 	// printTimeSequence("00:00", 10, 10)
