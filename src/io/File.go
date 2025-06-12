@@ -1,27 +1,31 @@
 package time_io
 
 import (
-	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 // 初始化文件
-func WriteFine(FilePath string, WriteContext []string) {
+func WriteFile(path string, content []string) {
 	// fmt.Println("-------------")
 	// fmt.Print(WriteContext)
-	File, err := os.Create(FilePath)
+	f, err := os.Create(path)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer File.Close()
+	defer f.Close()
 
-	for _, line := range WriteContext {
-		fmt.Printf("写入行内容: '%s', 长度: %d\n", line, len(line))
-		_, err := File.WriteString(line)
-		if err != nil {
-			log.Fatal(err)
-		}
+	sb := strings.Builder{}
+
+	for _, line := range content {
+		sb.WriteString(line)
+		sb.WriteString("\n")
+	}
+
+	_, err = f.WriteString(sb.String())
+	if err != nil {
+		log.Fatal(err)
 	}
 }

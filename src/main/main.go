@@ -2,24 +2,24 @@ package main
 
 import (
 	"Timeline_Assistant/src/calculation"
-	time_io "Timeline_Assistant/src/io"
+	timeIO "Timeline_Assistant/src/io"
 	"fmt"
 )
 
 // main 函数：程序入口
 // 创建任务链表并添加示例任务
 func main() {
-	TaskList := &calculation.TaskList{TaskHead: nil}
+	taskList := &calculation.TaskList{Head: nil}
 
-	calculation.AddTask(TaskList, "坠机", "00:10", "00:30")
-	calculation.AddTask(TaskList, "MAN", "00:10", "00:40")
-	calculation.AddTask(TaskList, "打德佬", "12:00", "13:50")
-	calculation.AddTask(TaskList, "OFN启动", "12:00", "13:50")
-	calculation.AddTask(TaskList, "黑联启动", "12:00", "13:50")
+	taskList.AddTask("坠机", "00:10", "00:30")
+	taskList.AddTask("MAN", "00:10", "00:40")
+	taskList.AddTask("打德佬", "12:00", "13:50")
+	taskList.AddTask("OFN启动", "12:00", "13:50")
+	taskList.AddTask("黑联启动", "12:00", "13:50")
 
-	Context := calculation.DisplayTaskTimeLine(*TaskList, "00:00", 10, 0, "15:04")
+	content := taskList.TaskTimeLine("00:00", 10, 0, "15:04")
 	fmt.Println("--------------------")
-	time_io.WriteFine("./file.txt", Context)
+	timeIO.WriteFile("./file.txt", content)
 
 	// // 打印从00:00开始，每10分钟一个时间点，打印6个时间点
 	// printTimeSequence("00:00", 10, 10)
